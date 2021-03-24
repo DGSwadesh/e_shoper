@@ -24,7 +24,7 @@
 @endif
 
 </p>
-    <form action={{ url('/saveSlider') }} method="post">
+    <form action={{ url('/saveSlider') }} method="post" enctype="multipart/form-data">
         @csrf
 
         <div class="form-group row ">

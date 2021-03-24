@@ -11,15 +11,14 @@ use Illuminate\Contracts\Session\Session;
 
 class SliderController extends Controller
 {
-    public function addProduct()
+    public function addSlider()
     {
-        return view('admin.add_product');
+        return view('admin.add_slider');
     }
 
     public function allSlider()
     {
         $all_slider_info = DB::table('tbl_slider')
-        ->where('publication_status',1)
         ->get();
 
         $manage_product = view('admin.all_slider')
@@ -31,9 +30,10 @@ class SliderController extends Controller
     public function saveSlider(Request $request)
     {
         $data = array();
-        $data['publication_status'] = $request->publication_status;
+        $data['publication_status'] = $request->publication_status == null ? 0 : 1;
 
         $image = $request->file('slider_image');
+        // dd($image);
         if ($image) {
             $image_name = Str::random(20);
             $ext = strtolower($image->getClientOriginalExtension());
@@ -44,7 +44,7 @@ class SliderController extends Controller
             if ($success) {
                 $data['slider_image'] = $image_url;
                 DB::table('tbl_slider')->insert($data);
-                $request->session()->put('message', 'slider added successfully');
+                $request->session()->put('message', 'slider added successfully with image');
                 return Redirect::to('/addSlider');
             }
         }
@@ -68,33 +68,17 @@ class SliderController extends Controller
                 ->update(['publication_status' => 1]);
             session(['message' => 'slider activate']);
         }
-        return Redirect::to('/allManufacture');
+        return Redirect::to('/allSlider');
     }
-
-    public function edit_slider($manaufacture_id)
-    {
-        $manaufacture_info = DB::table('tbl_slider')
-            ->where('manaufacture_id', $manaufacture_id)
-            ->first();
-        return view('admin.edit_manaufacture')->with('manaufacture_info', $manaufacture_info);
-    }
-
-    // public function update_slider(Request $request, $slider_id)
-    // {
-    //     $slider_name = $request->manaufacture_name;
-    //     $manaufacture_description = $request->manaufacture_description;
-    //     DB::table('tbl_slider')
-    //         ->where('manaufacture_id', $slider_id)
-    //         ->update(['manaufacture_name' => $slider_name, 'manaufacture_description' => $manaufacture_description]);
-    //     session(['message' => 'Manufacture updated successfully']);
-    //     return Redirect::to('/allManufacture');
-    // }
 
     public function delete_slider($slider_id)
     {
+        $image = DB::table('tbl_slider')
+                ->where('slider_id', $slider_id);
+                unlink();
         DB::table('tbl_slider')->where('slider_id', $slider_id)
             ->delete();
         session(['message' => 'slider deleted successfully']);
-        return Redirect::to('/allProduct');
+        return Redirect::to('/allSlider');
     }
 }

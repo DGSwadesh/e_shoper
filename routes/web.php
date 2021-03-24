@@ -8,6 +8,7 @@ use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ManufactureController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SliderController;
 
 // frontend-------------------------
 Route::get('/', [HomeController::class,'index']);
@@ -50,7 +51,5 @@ Route::get('/addSlider', [SliderController::class,'addSlider']);
 Route::get('/allSlider', [SliderController::class,'allSlider']);
 Route::post('/saveSlider', [SliderController::class,'saveSlider']);
 Route::get('/active_unactive_slider/{slider_id}/{slider_status}', [SliderController::class,'active_unactive_slider']);
-Route::get('/edit_slider/{slider_id}', [SliderController::class,'edit_slider']);
 Route::get('/delete_slider/{slider_id}', [SliderController::class,'delete_slider']);
-// Route::post('/update_slider/{slider_id}', [SliderController::class,'update_slider']);
 
