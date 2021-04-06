@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Slider;
 use DB;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -21,5 +23,11 @@ class HomeController extends Controller
         $manage_product = view('pages.home_content')
             ->with('all_published_product', $all_published_product);
         return $manage_product;
+    }
+    public function slider(){
+        $allsliders= DB::table('tbl_slider')->get();
+
+
+      return view('layout',compact('allsliders'));
     }
 }

@@ -11,7 +11,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SliderController;
 
 // frontend-------------------------
-Route::get('/', [HomeController::class,'index']);
+Route::get('/', [HomeController::class,'slider']);
 
 // backend-------------------------
 Route::get('/admin', [AdminController::class,'index']);
@@ -45,6 +45,7 @@ Route::get('/active_unactive_product/{product_id}/{product_status}', [ProductCon
 Route::get('/edit_product/{product_id}', [ProductController::class,'edit_product']);
 Route::post('/update_product/{manufacture_id}', [ProductController::class,'update_product']);
 Route::get('/delete_product/{product_id}', [ProductController::class,'delete_product']);
+// Route::get('/slider','HomeController@slider')->name('slider');
 
 //slider--Slider--SliderController-----------------------
 Route::get('/addSlider', [SliderController::class,'addSlider']);

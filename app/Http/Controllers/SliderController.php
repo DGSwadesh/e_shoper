@@ -19,7 +19,7 @@ class SliderController extends Controller
     public function allSlider()
     {
         $all_slider_info = DB::table('tbl_slider')
-        ->get();
+            ->get();
 
         $manage_product = view('admin.all_slider')
             ->with('all_slider_info', $all_slider_info);
@@ -74,8 +74,11 @@ class SliderController extends Controller
     public function delete_slider($slider_id)
     {
         $image = DB::table('tbl_slider')
-                ->where('slider_id', $slider_id);
-                unlink();
+            ->where('slider_id', $slider_id)->first();
+        // dd($image);
+        if($image->slider_image != ''){
+            unlink($image->slider_image);
+        }
         DB::table('tbl_slider')->where('slider_id', $slider_id)
             ->delete();
         session(['message' => 'slider deleted successfully']);
